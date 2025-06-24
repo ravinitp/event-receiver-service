@@ -16,13 +16,12 @@ event_receiver_service/
    - README.md            # This file
 
 
-
 ## Prerequisites
 - Go 1.24.4
 - Docker
 - AWS CLI configured with credentials
 - Terraform (optional for infrastructure deployment)
-- - python 3.x (for load test)
+- python 3.x (for load test)
 
 - **AWS CLI**: Configured with credentials having permissions for ECR, ECS, S3, DynamoDB, and CloudFormation.
 - **Docker**: Installed locally for building images.
@@ -238,25 +237,41 @@ python tests/load_test.py \
   --max-size-kb 5000
 ```
 ### Sample results
+
 Payload Size: 100KB
+
 ✅ Total Requests: 2970
+
 ✅ Success: 2970
+
 ❌ Failed: 0
+
 ⚡ Actual RPS: 99.00
+
 ⏱️ Avg Response Time: 44.74ms
 
 Payload Size: 1000KB
+
 ✅ Total Requests: 1065
+
 ✅ Success: 1065
+
 ❌ Failed: 0
+
 ⚡ Actual RPS: 35.50
+
 ⏱️ Avg Response Time: 182.84ms
 
 Payload Size: 5000KB
+
 ✅ Total Requests: 225
+
 ✅ Success: 225
+
 ❌ Failed: 0
+
 ⚡ Actual RPS: 7.50
+
 ⏱️ Avg Response Time: 959.55ms
 
 ### Server output logs
