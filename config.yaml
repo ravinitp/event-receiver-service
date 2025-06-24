@@ -1,0 +1,10 @@
+---
+valid_tiers:
+  - free
+  - pro
+  - enterprise
+s3_bucket: ravi-portal26-events
+batch_size_mb: 5
+batch_timeout_seconds: 5
+aws_region: ap-south-1
+port: 8000

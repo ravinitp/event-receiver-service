@@ -1,0 +1,4 @@
+.idea/
+event_receiver_service.iml
+bin
+*/.terraform/
