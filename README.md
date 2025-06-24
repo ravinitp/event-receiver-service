@@ -6,13 +6,14 @@ This is a high-throughput event receiver service built in Go using the Gin frame
 ## Project Structure
 
 event_receiver_service/
-├── cmd/                 # Main application entry point
-├── internal/            # Core application logic (config, handler, batch, metrics, model)
-├── terraform/           # Terraform configuration for ECS deployment
-├── config.yaml          # Application configuration
-├── Dockerfile           # Docker image definition
-├── Makefile             # Build and deployment tasks
-└── README.md            # This file
+   - cmd/                 # Main application entry point
+   - internal/            # Core application logic (config, handler, batch, metrics, model)
+   - terraform/           # Terraform configuration for ECS deployment
+   - tests                # load testing
+   - config.yaml          # Application configuration
+   - Dockerfile           # Docker image definition
+   - Makefile             # Build and deployment tasks
+   - README.md            # This file
 
 
 
