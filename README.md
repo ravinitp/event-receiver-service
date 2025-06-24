@@ -21,6 +21,7 @@ event_receiver_service/
 - Docker
 - AWS CLI configured with credentials
 - Terraform (optional for infrastructure deployment)
+- - python 3.x (for load test)
 
 - **AWS CLI**: Configured with credentials having permissions for ECR, ECS, S3, DynamoDB, and CloudFormation.
 - **Docker**: Installed locally for building images.
@@ -205,7 +206,7 @@ Prometheus metrics are available at `http://<hostname>:8000`
 - Ensure AWS credentials have permissions for S3 `PutObject` and ECS operations.
 - The service handles 1KB to 10MB request bodies via Gin's default body size limit.
 - For production, configure auto-scaling based on CPU/memory metrics in ECS.
-```
+
 
 This implementation:
 - Uses Go's concurrency model with goroutines and channels for high throughput (>100 req/s).
@@ -217,3 +218,52 @@ This implementation:
 - Includes unit tests for handler and batch processor.
 
 To deploy, follow the README instructions, ensuring AWS credentials are provided and Terraform variables are updated with your VPC subnets and security groups.
+
+## 🚀 Load Testing
+
+### 📦 Install Dependencies
+```bash
+python -m pip install -r requirements.txt
+```
+
+🧪 Run Load Test
+```bash
+python tests/load_test.py \
+  --endpoint http://localhost:8000/ingest \
+  --tier pro \
+  --target-rps 150 \
+  --duration 30 \
+  --min-size-kb 100 \
+  --max-size-kb 5000
+```
+### Sample results
+Payload Size: 100KB
+✅ Total Requests: 2970
+✅ Success: 2970
+❌ Failed: 0
+⚡ Actual RPS: 99.00
+⏱️ Avg Response Time: 44.74ms
+
+Payload Size: 1000KB
+✅ Total Requests: 1065
+✅ Success: 1065
+❌ Failed: 0
+⚡ Actual RPS: 35.50
+⏱️ Avg Response Time: 182.84ms
+
+Payload Size: 5000KB
+✅ Total Requests: 225
+✅ Success: 225
+❌ Failed: 0
+⚡ Actual RPS: 7.50
+⏱️ Avg Response Time: 959.55ms
+
+### Server output logs
+```bash
+[GIN] 2025/06/24 - 23:14:52 | 200 |  657.057ms | ::1 | POST "/ingest"
+Flushed batch to S3: events/batch_1750787092.jsonl (6.1 MB)
+Flushed batch to S3: events/batch_1750787093.jsonl (6.1 MB)
+...
+Flushed batch to S3: events/batch_1750787298.jsonl (10.2 MB)
+```
+All payloads were successfully flushed to S3 in .jsonl format with no data loss or errors observed during the test.
